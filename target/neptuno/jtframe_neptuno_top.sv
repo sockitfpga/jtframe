@@ -65,7 +65,7 @@ module neptuno_top(
     
     // Joystick
 `ifndef MC2
-    // joy pins for neputo and Multicore 2 plus
+    // joy pins for neptUNO and Multicore 2 plus
     ,output         JOY_CLK,
     output          JOY_LOAD,
     input           JOY_DATA
@@ -123,9 +123,9 @@ module neptuno_top(
     assign SD_CS   = 1'bZ;
     assign SD_SCLK = 1'bZ;
     assign SD_MOSI = 1'bZ;
-    
-    assign STM_RESET = 1'bZ;
 `endif  
+
+    assign STM_RESET = 1'bZ;
 
 `ifdef MCP
    //disable external interfaces for this core
