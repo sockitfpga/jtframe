@@ -24,6 +24,12 @@
     `define MC2_PINS
 `endif
 
+`ifndef MC2
+    `ifndef MCP
+        `define NEPTUNO_PINS
+    `endif
+`endif
+
 //`default_nettype none
 
 module neptuno_top(
@@ -94,6 +100,16 @@ module neptuno_top(
     output wire SRAM_OE 
 `endif
 
+`ifdef NEPTUNO_PINS
+    // SRAM
+    ,output wire [20:0] SRAM_A,
+    inout  wire [15:0] SRAM_Q,
+    output wire SRAM_WE,
+    output wire SRAM_OE,
+    output wire SRAM_UB,
+    output wire SRAM_LB
+`endif
+
     //STM32
     ,output wire  STM_RESET,
     output wire   SPI_nWAIT
@@ -131,6 +147,14 @@ module neptuno_top(
    //disable external interfaces for this core
     assign GPIO = 32'Hzzzz; 
 `endif  
+
+`ifdef NEPTUNO_PINS
+    //no SRAM for this core
+	assign SRAM_OE = 1'b1;
+	assign SRAM_WE = 1'b1;
+	assign SRAM_UB = 1'b1;
+	assign SRAM_LB = 1'b0;
+`endif
 
 `ifdef JTFRAME_SDRAM_LARGE
     localparam SDRAMW=23; // 64 MB
